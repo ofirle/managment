@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+    <script src="https://kit.fontawesome.com/08071497d5.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="/js/index.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Active Projects</title>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a style="font-size: 1.25em" class="active" href="/projects">Projects</a></li>
+                <li><a style="font-size: 0.85em;" href="/project/create">Add Project</a></li>
+                <li><a style="font-size: 1.25em" href="/payments">Payments</a></li>
+                <li><a style="font-size: 0.85em" href="/payment">Add Payment</a></li>
+                <li><a style="font-size: 1.25em" href="/suppliers">Suppliers</a></li>
+                <li><a style="font-size: 0.85em" href="/supplier/create">Add Supplier</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./LogoutServlet">Logout</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<h3>Active Projects</h3>
+
+    <div class="form-group">
+        <label for="company">Company</label>
+        <select id="company">
+            <option value="ALL">All</option>
+            <option value="DANIEL">Daniel</option>
+            <option value="HD">HD</option>
+        </select>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Address</th>
+            <th scope="col">Payment Status</th>
+            <th scope="col">Company</th>
+            <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+            {{#each projects}}
+            <tr class="project-row">
+                <th scope="row">{{id}}</th>
+                <td>{{first_name}} {{last_name}}</td>
+                <td>{{adate}}</td>
+                <td>{{address}}</td>
+                <td>
+                    <div class="progress">
+                            <div class="progress-bar" style="width: {{payment.process_percentage}}%" role="progressbar" aria-valuenow="{{payment.payed}}" aria-valuemin="0" aria-valuemax="{{payment.total}}">{{payment.process_percentage}}%</div>
+                    </div>
+                </td>
+                <td>{{company}}</td>
+                <td>
+                    <i id="edit-project" class="fa fa-edit icon-clickable" style="margin-left: 7px"></i>
+                    <i class="fa fa-trash-alt icon-clickable" style="margin-left: 7px"></i>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>

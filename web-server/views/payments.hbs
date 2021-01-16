@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="/js/payments.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Active Projects</title>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a style="font-size: 1.25em" href="/projects">Projects</a></li>
+                <li><a style="font-size: 0.85em;" href="/project/create">Add Project</a></li>
+                <li><a style="font-size: 1.25em" href="/payments">Payments</a></li>
+                <li><a style="font-size: 0.85em" href="/payment">Add Payment</a></li>
+                <li><a style="font-size: 1.25em" href="/suppliers">Suppliers</a></li>
+                <li><a style="font-size: 0.85em" href="/supplier/create">Add Supplier</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./LogoutServlet">Logout</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<h3>Payments</h3>
+<div class="container">
+    <div id="companies_shared"></div>
+    <div class="row">
+        <div class="col col-lg-4">
+            <h4>All Time</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Project Address</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each all_time.data}}
+                <tr class="payment-row">
+                    <th scope="row">{{id}}</th>
+                    <td>{{city}}, {{address}}</td>
+                    <td>{{amount}} {{../currency_symbol}}</td>
+                    <td>{{company}}</td>
+                    <td>{{adate}}</td>
+                </tr>
+                {{/each}}
+                <tr class="summery">
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{all_time.summery}} {{currency_symbol}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col col-lg-4">
+            <h4>This Month</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Project Address</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each this_month.data}}
+                    <tr class="payment-row">
+                        <th scope="row">{{id}}</th>
+                        <td>{{city}}, {{address}}</td>
+                        <td>{{amount}} {{../currency_symbol}}</td>
+                        <td>{{company}}</td>
+                        <td>{{adate}}</td>
+                    </tr>
+                {{/each}}
+                <tr class="summery">
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{this_month.summery}} {{currency_symbol}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col col-lg-4">
+            <h4>Pending Payments</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Project Address</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each projects_rest_to_pay.data}}
+                    <tr class="payment-row">
+                        <th scope="row">{{id}}</th>
+                        <td>{{city}}, {{address}}</td>
+                        <td>{{company}}</td>
+                        <td>{{rest_to_pay}} {{../currency_symbol}}</td>
+                    </tr>
+                {{/each}}
+                    <tr class="summery">
+                        <th scope="row"></th>
+                        <td></td>
+                        <td></td>
+                        <td>{{projects_rest_to_pay.summery}} {{currency_symbol}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
