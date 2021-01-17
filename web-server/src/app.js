@@ -12,7 +12,7 @@ const app = express();
 const publicDirectoryPath = path.join(__dirname, '../public');
 app.use(express.static(publicDirectoryPath));
 app.use(express.json());
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, '../views/'));
 app.set('view engine', 'hbs');
 
 app.get('/payments', (req, res,) => {
@@ -35,7 +35,7 @@ app.get('/suppliers', (req, res,) => {
 
 app.get('/projects', (req, res,) => {
     projects_model.getProjectsInfo(false, (data) => {
-        res.render('index', {'projects':data});
+        res.render('index.hbs', {'projects':data});
     });
 });
 
