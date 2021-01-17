@@ -2,10 +2,10 @@ const mysql = require('mysql');
 const config = require('config');
 
 const pool = mysql.createPool({
-    host: config.get('db.host'),
-    user: config.get('db.username'),
-    password: config.get('db.password'),
-    database : config.get('db.database'),
+    host: config.get('db_stage.host'),
+    user: config.get('db_stage.username'),
+    password: config.get('db_stage.password'),
+    database : config.get('db_stage.database'),
     typeCast: function (field, next) {
         if (field.type == 'VAR_STRING') {
             return field.string();
