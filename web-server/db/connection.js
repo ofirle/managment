@@ -1,11 +1,12 @@
 const mysql = require('mysql');
-const config = require('config');
+// const config = require('config');
 
+require("dotenv").config();
 const pool = mysql.createPool({
-    host: config.get('db_stage.host'),
-    user: config.get('db_stage.username'),
-    password: config.get('db_stage.password'),
-    database : config.get('db_stage.database'),
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database : process.env.DB_DATABASE,
     typeCast: function (field, next) {
         if (field.type == 'VAR_STRING') {
             return field.string();
