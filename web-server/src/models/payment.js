@@ -141,7 +141,7 @@ function parsePaymentObject(item) {
 }
 
 function paymentObject(item) {
-    if(item.hasOwnProperty(payment)){
+    if(item.hasOwnProperty('payment')){
         item.payment = JSON.parse('{ ' +
             '"payed": ' + item.payment_payed + ', ' +
             '"total": ' + item.payment_amount + ', ' +
