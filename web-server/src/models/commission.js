@@ -57,7 +57,7 @@ const getCommissionsInfoBySupplier = (supplier_id, callback) => {
 };
 
 const setNewCommission = (data, callback) => {
-    const {sql, values} = lib.buildSqlCreate('communications', [ 'project_id', 'supplier_id', 'item_cost', 'item_description', 'percentage', 'payment_method'], data);
+    const {sql, values} = lib.buildSqlCreate('commissions', [ 'project_id', 'supplier_id', 'item_cost', 'item_description', 'percentage', 'payment_method'], data);
     let succeed = false;
     mysql.connection.query(sql, values,
         function (err, results) {
