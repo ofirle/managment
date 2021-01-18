@@ -141,11 +141,11 @@ function parsePaymentObject(item) {
 }
 
 function paymentObject(item) {
-    item["payment"] = JSON.parse('{ ' +
-        '"payed": ' + item.payment_payed + ', ' +
-        '"total": ' + item.payment_amount + ', ' +
-        '"process_percentage" : ' + ((item.payment_payed / item.payment_amount) * 100).toFixed(2) +
-        '}');
+    item.payment = {
+        payed: item.payment_payed,
+        total: item.payment_amount,
+        process_percentage: ((item.payment_payed / item.payment_amount) * 100).toFixed(2)
+    };
     delete (item.payment_payed);
 }
 
