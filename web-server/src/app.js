@@ -208,7 +208,7 @@ app.post('/color/create', (req, res,) => {
 
 app.post('/commission/create', (req, res,) => {
     console.log("in Post Commission Create: ");
-    commissions_model.setNewCommission(req.body, (data) => {
+    commission_model.setNewCommission(req.body, (data) => {
         res.send(data);
     });
 });
