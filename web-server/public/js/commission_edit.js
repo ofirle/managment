@@ -55,10 +55,10 @@ $(document).ready(function(){
         const data = {
             project_id: project_id,
             supplier_id: $("#supplier_id").val(),
-            payment_method: $("#method").val(),
             item_cost: $("#item_cost").val(),
             item_description: $("#item_description").val(),
-            percentage: $("#percentage").val()
+            percentage: $("#percentage").val(),
+            payment_method: $("#method").val()
         };
         console.log(data);
         for (const property in data) {
