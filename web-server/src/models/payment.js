@@ -141,20 +141,12 @@ function parsePaymentObject(item) {
 }
 
 function paymentObject(item) {
-    if(item.hasOwnProperty('payment')){
-        item.payment = JSON.parse('{ ' +
-            '"payed": ' + item.payment_payed + ', ' +
-            '"total": ' + item.payment_amount + ', ' +
-            '"process_percentage" : ' + ((item.payment_payed / item.payment_amount) * 100).toFixed(2) +
-            '}');
-        delete (item.payment_payed);
-    }else{
-        item.payment = {
-            payed: 0,
-            total: 0,
-            process_percentage: 0
-        }
-    }
+    item["payment"] = JSON.parse('{ ' +
+        '"payed": ' + item.payment_payed + ', ' +
+        '"total": ' + item.payment_amount + ', ' +
+        '"process_percentage" : ' + ((item.payment_payed / item.payment_amount) * 100).toFixed(2) +
+        '}');
+    delete (item.payment_payed);
 }
 
 function paymentRestToPay(item) {
