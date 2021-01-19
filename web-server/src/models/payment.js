@@ -151,9 +151,13 @@ function paymentObject(item) {
 }
 
 function paymentRestToPay(item) {
+    let value = base.getValueCompanyShared(item.company, base.paymentSharedByCompany);
+    if(value !== false){
+        item.amount = item.amount * (value / 100);
+    }
     if(base.isKeyExist(item.company, base.paymentSharedByCompany)){
-        item.payment_amount = item.payment_amount * (paymentSharedByCompany[item.company] / 100);
-        item.payment_payed = item.payment_payed * (paymentSharedByCompany[item.company] / 100);
+        item.payment_amount = item.payment_amount * (value / 100);
+        item.payment_payed = item.payment_payed * (value / 100);
     }
     item.company = base.parseLabelText(item.company, base.companiesArray);
     item.rest_to_pay = item.payment_amount - item.payment_payed;
