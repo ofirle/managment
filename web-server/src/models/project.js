@@ -13,7 +13,7 @@ const getProjectsInfo = (filters, callback) => {
     mysql.connection.query(
         "SELECT pr.*, SUM(p.amount) as payment_payed" +
         " FROM projects pr " +
-        " LEFT JOIN payments p ON p.project_id=pr.id " + where +
+        " LEFT JOIN payments p ON p.object='PROJECT' AND p.object_id=pr.id " + where +
         " GROUP BY pr.id", values,
         function (err, result, fields) {
             if (err) throw err;
@@ -31,6 +31,10 @@ function getFormatQuery(filters){
             switch (filter.object) {
                 case 'COMPANY':
                     where += ' AND pr.company=?';
+                    values.push(filter.value);
+                    break;
+                case 'STATUS':
+                    where += ' AND pr.status=?';
                     values.push(filter.value);
             }
         });
@@ -52,7 +56,8 @@ const getProjectsNotFullyPayed = (callback) => {
     mysql.connection.query(
         "SELECT pr.*, SUM(p.amount) as payment_payed" +
         " FROM projects pr" +
-        " LEFT JOIN payments p ON p.project_id=pr.id" +
+        " LEFT JOIN payments p ON p.object_id=pr.id" +
+        " WHERE p.object='PROJECT'" +
         " GROUP BY pr.id" +
         " HAVING payment_payed<pr.payment_amount",
         function (err, results, fields) {
@@ -97,7 +102,7 @@ const getProjectInfo = (project_id, to_parse = false, callback) => {
         mysql.connection.query(
             "SELECT pr.*, SUM(p.amount) as payment_payed" +
             " FROM projects pr" +
-            " INNER JOIN payments p ON p.project_id=pr.id" +
+            " LEFT JOIN payments p ON p.object='PROJECT' AND p.object_id=pr.id" +
             " WHERE pr.id=?", [project_id],
             function (err, results) {
                 if (err) throw err;
@@ -122,12 +127,13 @@ const getSharedCompanies = (callback) => {
 const setProjectInfo = (project_id, data, callback) => {
     console.log("in setProjectInfo. project_id: " + project_id);
     let updated = false;
+    console.log(data);
     getProjectInfo(project_id, false,(old_data) => {
         if(old_data == null){
             callback({updated: false, data: 'PROJECT_NOT_FOUND'});
             return;
         }
-        const fields = ['first_name', 'last_name', 'city', 'address', 'status', 'payment_amount'];
+        const fields = ['first_name', 'last_name', 'phone', 'city', 'address', 'status', 'company', 'start_date', 'payment_amount'];
         let fields_changed = [];
         fields.forEach(function (item, index) {
             if(lib.isValueChanged(old_data[item], data[item])){
@@ -191,6 +197,7 @@ const getNotesInfo = (project_id, callback) => {
 
 function parseProjectInfo(item) {
     item.adate = base.parseDate(item.adate, false);
+    item.start_date = base.parseDate(item.start_date, false);
     item.status = base.parseLabelText(item.status, base.projectsStatusArray);
     item.company = base.parseLabelText(item.company, base.companiesArray);
     return item;

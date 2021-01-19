@@ -45,16 +45,42 @@
 </nav>
 
 <h3>Payments</h3>
-<div class="container">
+<div class="container" style="width: 95%">
     <div id="companies_shared"></div>
     <div class="row">
         <div class="col col-lg-4">
             <h4>All Time</h4>
-            <table class="table">
+            <div class="form-inline" style="margin-top: 30px;">
+                <label for="from_date" style="width: 45%;">From</label>
+                <label for="to_date" style="width: 45%; float: right">To</label>
+            </div>
+            <div class="form-inline">
+                <input class="form-control" type="date" id="from_date" name="start_date" style="width: 45%">
+                <input class="form-control" type="date" id="to_date" name="end_date" style="width: 45%; float: right">
+            </div>
+            <div class="form-inline" style="margin-top: 30px;">
+                <label for="company" style="width: 45%;">Company</label>
+                <label for="object" style="width: 45%; float: right">Type</label>
+            </div>
+            <div class="form-inline">
+                <select id="company" class="form-control" style="width: 45%;">
+                    <option value="ALL">All</option>
+                    <option value="DANIEL">Daniel</option>
+                    <option value="HD">HD</option>
+                </select>
+<!--                <label for="object">Object</label>-->
+                <select id="object" class="form-control" style="width: 45%; float: right">
+                    <option value="ALL">All</option>
+                    <option value="PROJECT">Project</option>
+                    <option value="COMMISSION">Commission</option>
+                </select>
+            </div>
+            <table class="table" style="margin-top: 30px;">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Project Address</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Project/ Supplier</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Company</th>
                     <th scope="col">Date</th>
@@ -64,7 +90,8 @@
                 {{#each all_time.data}}
                 <tr class="payment-row">
                     <th scope="row">{{id}}</th>
-                    <td>{{city}}, {{address}}</td>
+                    <td>{{object}}</td>
+                    <td>{{object_value_text}}</td>
                     <td>{{amount}} {{../currency_symbol}}</td>
                     <td>{{company}}</td>
                     <td>{{adate}}</td>
@@ -86,7 +113,8 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Project Address</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Project/ Supplier</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Company</th>
                     <th scope="col">Date</th>
@@ -96,7 +124,8 @@
                 {{#each this_month.data}}
                     <tr class="payment-row">
                         <th scope="row">{{id}}</th>
-                        <td>{{city}}, {{address}}</td>
+                        <td>{{object}}</td>
+                        <td>{{object_value_text}}</td>
                         <td>{{amount}} {{../currency_symbol}}</td>
                         <td>{{company}}</td>
                         <td>{{adate}}</td>
@@ -142,7 +171,6 @@
             </table>
         </div>
     </div>
-
 </div>
 </body>
 </html>

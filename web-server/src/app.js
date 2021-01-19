@@ -16,10 +16,12 @@ app.set('views', path.join(__dirname, '../views/'));
 app.set('view engine', 'hbs');
 
 app.get('/payments', (req, res,) => {
-    payments_model.getPayments(false, false, true, (all_time) => {
+    payments_model.getPayments(false, true, (all_time) => {
         var date = new Date();
         var firstDayMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-        payments_model.getPayments(firstDayMonth.getTime()/1000, false, true,(this_month) => {
+        let filter_month= [{object: 'FROM_DATE', value: firstDayMonth.getTime()/1000}];
+
+        payments_model.getPayments(filter_month, true,(this_month) => {
             projects_model.getProjectsNotFullyPayed((projects_rest_to_pay) => {
                 res.render('payments', {'all_time':all_time, 'this_month':this_month, 'projects_rest_to_pay': projects_rest_to_pay, 'currency_symbol': '₪'} );
             });
@@ -173,6 +175,27 @@ app.get('/commission/:commission_id?', (req, res,) => {
         res.render('commission_edit', {'action_edit': action_edit,'data':commission_data});
     });
 });
+
+app.get('/commission/payed/:commission_id?', (req, res,) => {
+    const commission_id = req.params.commission_id;
+        res.render('commission_payed', {'data':{commission_id: commission_id}});
+});
+
+app.post('/commission/getCommissionsIds', (req, res,) => {
+    commission_model.getCommissionsIds((data) => {
+        res.send(data)
+    });
+});
+
+///commission/payed/set/
+
+app.post('/commission/payed/set/:commission_id', (req, res,) => {
+    const commission_id = req.params.commission_id;
+    commission_model.setPaymentCommission(commission_id, req.body, (data) => {
+        res.send(data)
+    });
+});
+
 
 app.post('/commission/set/:commission_id?', (req, res,) => {
     const commission_id = req.params.commission_id;

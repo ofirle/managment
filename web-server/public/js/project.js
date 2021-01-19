@@ -21,6 +21,13 @@ $(document).ready(function(){
         window.location.href = "/commission/" + commission_id;
     });
 
+    $(".commission-payed").on("click", function() {
+        const commission_id = $(this).parent().siblings('#id').first().html();
+        console.log("Payed Commission Clicked: " + commission_id);
+        window.location.href = "/commission/payed/" + commission_id;
+    });
+
+
     $(".edit-color").on("click", function() {
         const color_id = $(this).parent().siblings('#id').first().html();
         console.log("Edit Commission Clicked: " + color_id);

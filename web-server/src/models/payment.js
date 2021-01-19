@@ -1,26 +1,20 @@
 const mysql = require('../../db/connection');
 const lib = require('../lib/operations');
 const base = require('./base');
-const paymentSharedByCompany = {HD: 50};
 
-const getPayments = (from_time = false, to_time = false, calculate_own = false, callback) => {
-    let where = " WHERE 1";
-    let binds = [];
-    if(from_time){
-        where += ' AND p.adate>=?';
-        binds.push(from_time);
-    }
-    if(to_time){
-        where += ' AND p.adate<=?';
-        binds.push(to_time);
-    }
+// const getPayments = (from_time = false, to_time = false, calculate_own = false, callback) => {
+const getPayments = (filters, calculate_own = false, callback) => {
 
+    const [where, values] = getFormatQuery(filters);
     mysql.connection.query(
-        "SELECT p.*, pr.city, pr.address, pr.company" +
+        "SELECT p.*, pr.city, pr.address, pr.company, s.title as supplier_title, pr2.company as company2" +
         " FROM payments p" +
-        " LEFT JOIN projects pr ON p.project_id=pr.id" +
+        " LEFT JOIN projects pr ON p.object_id=pr.id AND object='PROJECT'" +
+        " LEFT JOIN projects pr2 ON p.rel_object_id=pr2.id AND p.rel_object='PROJECT'" +
+        " LEFT JOIN commissions c ON p.object_id=c.id AND object='COMMISSION'" +
+        " LEFT JOIN suppliers s ON s.id=c.supplier_id" +
         where +
-        " ORDER BY p.adate ASC", binds,
+        " ORDER BY p.adate ASC", values,
         function (err, results, fields) {
             if (err) throw err;
             results.forEach(parsePayments);
@@ -33,11 +27,18 @@ const getPayments = (from_time = false, to_time = false, calculate_own = false, 
 };
 
 function parsePayments(item){
-    if(base.isKeyExist(item.company, base.paymentSharedByCompany)){
-        item.amount = item.amount * (paymentSharedByCompany[item.company] / 100);
+    if(!item.company){
+        item.company = item.company2;
+    }
+    let value = base.getValueCompanyShared(item.company, base.paymentSharedByCompany);
+    console.log(value);
+    if(value !== false){
+        item.amount = item.amount * (value / 100);
     }
     item.adate = base.parseDate(item.adate);
     item.company = base.parseLabelText(item.company, base.companiesArray);
+    item.object_value_text = item.object === 'PROJECT' ? item.city +', ' + item.address : item.supplier_title;
+    item.object = base.parseLabelText(item.object, base.objectTypeArray);
 }
 const setNewPayment = (data, callback) => {
     const {sql, values} = lib.buildSqlCreate('payments', [ 'project_id', 'method', 'amount'], data);
@@ -104,7 +105,7 @@ const getPaymentsInfoByProject = (project_id, callback) => {
     mysql.connection.query(
         "SELECT id, method, amount, adate, edate" +
         " FROM payments" +
-        " WHERE project_id=?" +
+        " WHERE object='PROJECT' AND object_id=?" +
         " ORDER BY adate ASC", [project_id],
         function (err, results) {
             if (err) throw err;
@@ -157,6 +158,36 @@ function paymentRestToPay(item) {
     item.company = base.parseLabelText(item.company, base.companiesArray);
     item.rest_to_pay = item.payment_amount - item.payment_payed;
 }
+
+function getFormatQuery(filters){
+    let where = ' WHERE 1';
+    let values = [];
+    if(filters !== false) {
+        filters.forEach(function (filter) {
+            switch (filter.object) {
+                case 'FROM_DATE':
+                    where += ' AND p.adate>=?';
+                    values.push(filter.value);
+                    break;
+                case 'TO_DATE':
+                    where += ' AND p.adate<=?';
+                    values.push(filter.value);
+                    break;
+                case 'COMPANY':
+                    where += ' AND pr.company=?';
+                    values.push(filter.value);
+                    break;
+                case 'OBJECT':
+                    where += ' AND p.object=?';
+                    values.push(filter.value);
+                    break;
+
+            }
+        });
+    }
+    return [where, values];
+}
+
 
 module.exports = {
     getPaymentsInfoByProject: getPaymentsInfoByProject,

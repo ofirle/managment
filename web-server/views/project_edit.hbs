@@ -61,6 +61,10 @@
                     <input type="text" class="form-control" id="last_name" placeholder="Enter Last Name" value="{{last_name}}">
                 </div>
                 <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number..." value="{{phone}}">
+                </div>
+                <div class="form-group">
                     <label for="city">City</label>
                     <input type="text" class="form-control" id="city" placeholder="Enter City" value="{{city}}">
                 </div>
@@ -78,8 +82,23 @@
                         <option value="PAUSED">Paused</option>
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label for="payment_amount">Amount</label>
+                    <label for="status_labels">Company</label>
+                    <select id="company" class="form-control" value="{{company}}">
+                        <option value="">-- Select</option>
+                        <option value="DANIEL">Daniel</option>
+                        <option value="HD">HD</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start_date">Start Project:</label>
+                    <input class="form-control" type="date" id="start_date" name="start_date" value="{{start_date}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="payment_amount">Agreed Payment</label>
                     <input type="number" class="form-control" id="payment_amount" placeholder="Enter Payment Amount" value="{{payment_amount}}">
                 </div>
                 <button id="submit-edit-project" type="button" class="btn btn-primary">Submit</button>

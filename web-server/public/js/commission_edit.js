@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#method").val($("#method").attr('value'));
+    $("#bought_date").val(getFormatDate($("#bought_date").attr('value')));
     $.ajax({
         type: "POST",
         url: location.origin +"/payment/getProjectsIds",
@@ -58,7 +58,8 @@ $(document).ready(function(){
             item_cost: $("#item_cost").val(),
             item_description: $("#item_description").val(),
             percentage: $("#percentage").val(),
-            payment_method: $("#method").val()
+            bought_date: Date.parse($("#bought_date").val())/1000
+
         };
         console.log(data);
         for (const property in data) {
@@ -80,3 +81,16 @@ $(document).ready(function(){
         });
     });
 });
+
+function getFormatDate(timestamp){
+    let date = new Date(timestamp * 1000);
+    return date.getFullYear() + '-' + fillerZeroes(date.getMonth().toString() + 1,2) +'-'+ fillerZeroes(date.getDate().toString(),2);
+}
+
+function fillerZeroes(string, num_chars){
+    console.log("string:" + string);
+    console.log("num_chars:" + num_chars);
+    console.log("string.length:" + string.length);
+    const zeroes_to_fill = num_chars - string.length;
+    return "0".repeat(zeroes_to_fill) + string;
+}

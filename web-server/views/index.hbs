@@ -49,10 +49,20 @@
 
     <div class="form-group">
         <label for="company">Company</label>
-        <select id="company">
+        <select id="company" class="form-control">
             <option value="ALL">All</option>
             <option value="DANIEL">Daniel</option>
             <option value="HD">HD</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="status_labels">Status</label>
+        <select id="status" class="form-control">
+            <option value="ALL">All</option>
+            <option value="PENDING">Pending</option>
+            <option value="IN_PROCESS">In Process</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="PAUSED">Paused</option>
         </select>
     </div>
     <table class="table">
@@ -60,10 +70,11 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Full Name</th>
-            <th scope="col">Created Date</th>
             <th scope="col">Address</th>
+            <th scope="col">Start Date</th>
             <th scope="col">Payment Status</th>
             <th scope="col">Company</th>
+            <th scope="col">Created Date</th>
             <th scope="col">Options</th>
         </tr>
         </thead>
@@ -72,14 +83,15 @@
             <tr class="project-row">
                 <th scope="row">{{id}}</th>
                 <td>{{first_name}} {{last_name}}</td>
-                <td>{{adate}}</td>
                 <td>{{address}}</td>
+                <td>{{start_date}}</td>
                 <td>
                     <div class="progress">
                             <div class="progress-bar" style="width: {{payment.process_percentage}}%" role="progressbar" aria-valuenow="{{payment.payed}}" aria-valuemin="0" aria-valuemax="{{payment.total}}">{{payment.process_percentage}}%</div>
                     </div>
                 </td>
                 <td>{{company}}</td>
+                <td>{{adate}}</td>
                 <td>
                     <i id="edit-project" class="fa fa-edit icon-clickable" style="margin-left: 7px"></i>
                     <i class="fa fa-trash-alt icon-clickable" style="margin-left: 7px"></i>

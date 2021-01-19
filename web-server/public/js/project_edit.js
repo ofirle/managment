@@ -1,6 +1,8 @@
 $(document).ready(function(){
     $("#status").val($("#status").attr('value'));
-    console.log(status);
+    $("#company").val($("#company").attr('value'));
+    $("#start_date").val(getFormatDate($("#start_date").attr('value')));
+
     $("#submit-edit-project").on("click", function(event){
         event.preventDefault();
         console.log("submit clicked");
@@ -14,14 +16,18 @@ $(document).ready(function(){
         const data = {
             first_name: $("#first_name").val(),
             last_name: $("#last_name").val(),
+            phone: $("#phone").val(),
             city: $("#city").val(),
             address: $("#address").val(),
             status: $("#status").val(),
+            company: $("#company").val(),
+            start_date: Date.parse($("#start_date").val())/1000,
             payment_amount: $("#payment_amount").val()
         };
+        console.log(data);
         const message = isValidForm(data);
         if(message !== true){
-            alert(message);
+            // alert(message);
         }
 
         $.ajax({
@@ -49,4 +55,17 @@ function isValidForm(data){
         }
     }
     return true;
+}
+
+function getFormatDate(timestamp){
+    let date = new Date(timestamp * 1000);
+   return date.getFullYear() + '-' + fillerZeroes(date.getMonth().toString() + 1,2) +'-'+ fillerZeroes(date.getDate().toString(),2);
+}
+
+function fillerZeroes(string, num_chars){
+    console.log("string:" + string);
+    console.log("num_chars:" + num_chars);
+    console.log("string.length:" + string.length);
+    const zeroes_to_fill = num_chars - string.length;
+    return "0".repeat(zeroes_to_fill) + string;
 }

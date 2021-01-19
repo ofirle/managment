@@ -64,8 +64,16 @@
                         <td>{{info.first_name}} {{info.last_name}}</td>
                     </tr>
                     <tr>
+                        <th>Phone</th>
+                        <td>{{info.phone}}</td>
+                    </tr>
+                    <tr>
                         <th>Address</th>
                         <td>{{info.city}}, {{info.address}}</td>
+                    </tr>
+                    <tr>
+                        <th>Start Date</th>
+                        <td>{{info.start_date}}</td>
                     </tr>
                     <tr>
                         <th>Total Payed</th>
@@ -74,6 +82,10 @@
                     <tr>
                         <th>Total Amount</th>
                         <td>{{info.payment.total}}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{info.company}}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
@@ -125,7 +137,9 @@
                     <th scope="col">Supplier</th>
                     <th scope="col">Description</th>
                     <th scope="col">Amount</th>
-                    <th scope="col">Created</th>
+                    <th scope="col">Bought Date</th>
+                    <th scope="col">Payed?</th>
+                    <th scope="col">Payed Date</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -133,10 +147,13 @@
                 {{#each commissions}}
                     <tr class="commission-row">
                         <th id="id" scope="row">{{id}}</th>
-                        <td>{{supplier_id}}</td>
+                        <td>{{supplier_title}}</td>
                         <td>{{item_description}}</td>
-                        <td>{{commission_value}}</td>
-                        <td>{{adate}}</td>
+                        <td>{{amount}}</td>
+                        <td>{{bought_date}}</td>
+                        <td>{{is_payed}}</td>
+                        <td>{{payed_date}}</td>
+                        <td><i class="fa fa-money-bill icon-clickable commission-payed"></i></td>
                         <td><i class="fa fa-edit icon-clickable edit-commission" style="float:right"></i></td>
                     </tr>
                 {{/each}}

@@ -14,7 +14,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="/js/commission_edit.js"></script>
+    <script src="/js/commission_payed.js"></script>
     <link rel="stylesheet" href="/css/index.css">
     <title>Payment Edit</title>
 </head>
@@ -49,11 +49,7 @@
 
 
 
-{{#if action_edit}}
-    <h3>Commission Edit</h3>
-{{else}}
-    <h3>Create Commission</h3>
-{{/if}}
+<h3>Commission Payed</h3>
 </div>
 <div class="container">
     <div class="row">
@@ -61,39 +57,29 @@
             <form>
 <!---->
                 <div class="form-group">
-                    <label for="project_id">Project</label>
-                    <select id="project_id" class="form-control" value="{{data.project_id}}">
+                    <label for="commission_id">Commission ID</label>
+                    <select id="commission_id" class="form-control" value="{{data.commission_id}}">
                         <option value="">-- Select</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="supplier_id">Supplier</label>
-                    <select id="supplier_id" class="form-control" value="{{data.supplier_id}}">
+                    <label for="method">Method</label>
+                    <select id="method" class="form-control">
                         <option value="">-- Select</option>
+                        <option value="BIT">Bit</option>
+                        <option value="BANK_TRANSFER">Bank Transfer</option>
+                        <option value="CASH">Cash</option>
+                        <option value="CHECK">Check</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="item_cost">Item Cost</label>
-                    <input type="number" class="form-control" id="item_cost" placeholder="Enter Amount" value="{{data.item.cost}}">
-                </div>
-                <div class="form-group">
-                    <label for="item_cost">Item Description</label>
-                    <input type="text" class="form-control" id="item_description" placeholder="Enter Description" value="{{data.item.description}}">
+                    <label for="payed_date">Payed Date:</label>
+                    <input class="form-control" type="date" id="payed_date" name="payed_date">
                 </div>
 
-                <div class="form-group">
-                    <label for="percentage">Commission percentage</label>
-                    <input type="number" class="form-control" id="percentage" placeholder="Enter 1-100" value="{{data.percentage}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="bought_date">Bought Date:</label>
-                    <input class="form-control" type="date" id="bought_date" name="bought_date" value="{{data.bought_date}}">
-                </div>
-
-                <button id="submit-edit-commission" type="button" class="btn btn-primary">Submit</button>
+                <button id="submit-commission-payed" type="button" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
