@@ -56,7 +56,7 @@ const getProjectsNotFullyPayed = (callback) => {
     mysql.connection.query(
         "SELECT pr.*, IF(SUM(p.amount) IS NULL,0,SUM(p.amount)) as payment_payed" +
         " FROM projects pr" +
-        " LEFT JOIN payments p ON p.object_id=pr.id AND p.object='PROJECT" +
+        " LEFT JOIN payments p ON p.object_id=pr.id AND p.object='PROJECT'" +
         " GROUP BY pr.id" +
         " HAVING payment_payed<pr.payment_amount",
         function (err, results, fields) {
