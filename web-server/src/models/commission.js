@@ -45,7 +45,7 @@ const getCommissionsInfoByProject = (project_id, callback) => {
 const getCommissionsInfoBySupplier = (supplier_id, callback) => {
     console.log("in getCommissionsInfoBySupplier. supplier_id: " + supplier_id);
     mysql.connection.query(
-        "SELECT c.*, p.address as project_address" +
+        "SELECT c.*, p.address as project_address, IF(c.payed_date IS NULL, 0, 1) is_payed" +
         " FROM commissions c" +
         " INNER JOIN projects p ON p.id=c.project_id" +
         " WHERE c.supplier_id=?" +
