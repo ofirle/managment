@@ -101,6 +101,7 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Project Address</th>
                     <th scope="col">Description</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Bought Date</th>
@@ -113,6 +114,7 @@
                 {{#each commissions}}
                     <tr class="commission-row">
                         <th id="id" scope="row">{{id}}</th>
+                        <td>{{project_address}}</td>
                         <td>{{item_description}}</td>
                         <td>{{amount}}</td>
                         <td>{{bought_date}}</td>
