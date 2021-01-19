@@ -31,6 +31,7 @@ function parseLabelText(key, labels){
 //     return '---';
 // }
 
+
 function isKeyExist(key, array){
     return key in array;
 }
