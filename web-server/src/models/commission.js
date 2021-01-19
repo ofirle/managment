@@ -47,7 +47,6 @@ const getCommissionsInfoBySupplier = (supplier_id, callback) => {
     mysql.connection.query(
         "SELECT c.*, p.address as project_address, IF(c.payed_date IS NULL, 0, 1) is_payed" +
         " FROM commissions c" +
-        " INNER JOIN projects p ON p.id=c.project_id" +
         " WHERE c.supplier_id=?" +
         " ORDER BY c.adate ASC", [supplier_id],
         function (err, results) {
