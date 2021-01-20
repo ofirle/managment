@@ -24,7 +24,6 @@ $(document).ready(function(){
             start_date: Date.parse($("#start_date").val())/1000,
             payment_amount: $("#payment_amount").val()
         };
-        console.log(data);
         const message = isValidForm(data);
         if(message !== true){
             // alert(message);

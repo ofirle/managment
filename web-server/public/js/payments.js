@@ -16,4 +16,96 @@ $(document).ready(function() {
             // }
         }
     });
+
+    $( "#company" ).change(function() {
+        console.log(":ASDASD");
+        let data = getFilters();
+        setFilters(data);
+    });
+
+    $( "#object" ).change(function() {
+        let data = getFilters();
+        setFilters(data);
+    });
+
+    $( "#from_date" ).change(function() {
+        let data = getFilters();
+        setFilters(data);
+    });
+
+    $( "#to_date" ).change(function() {
+        let data = getFilters();
+        setFilters(data);
+    });
 });
+
+function setFilters(data){
+    $.ajax({
+        type: "POST",
+        url: 'payments/filter',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(data) {
+            let html = " {{#each all_time.data}}\n" +
+                "                <tr class=\"payment-row\">\n" +
+                "                    <th scope=\"row\">{{id}}</th>\n" +
+                "                    <td>{{object}}</td>\n" +
+                "                    <td>{{object_value_text}}</td>\n" +
+                "                    <td>{{amount}} {{../currency_symbol}}</td>\n" +
+                "                    <td>{{company}}</td>\n" +
+                "                    <td>{{adate}}</td>\n" +
+                "                </tr>\n" +
+                "                {{/each}}\n" +
+                "                <tr class=\"summery\">\n" +
+                "                    <th scope=\"row\"></th>\n" +
+                "                    <td></td>\n" +
+                "                    <td></td>\n" +
+                "                    <td></td>\n" +
+                "                    <td>{{all_time.summery}} {{currency_symbol}}</td>\n" +
+                "                </tr>";
+            const template = Handlebars.compile(html);
+            const result = template(data);
+            $( "#all_time_table" ).html(result);
+            // rowListener();
+        }
+    });
+}
+
+
+function getFilters(){
+    let data = [];
+    getFilterCompany(data);
+    getFilterObject(data);
+    getFilterFromDate(data);
+    getFilterToDate(data);
+    return data;
+}
+
+function getFilterObject(data){
+    const object = $( "#object" ).val();
+    if(object !== 'ALL'){
+        data.push({object: 'OBJECT', value: object});
+    }
+}
+
+function getFilterCompany(data){
+    const company = $( "#company" ).val();
+    if(company !== 'ALL'){
+        data.push({object: 'COMPANY', value: company});
+    }
+}
+
+function getFilterFromDate(data){
+    const from_date = $( "#from_date" ).val();
+    if(from_date !== ''){
+        data.push({object: 'FROM_DATE', value: Date.parse(from_date)/1000});
+    }
+}
+
+function getFilterToDate(data){
+    const to_date = $( "#to_date" ).val();
+    if(to_date !== ''){
+        data.push({object: 'TO_DATE', value: Date.parse(to_date)/1000});
+    }
+}

@@ -29,6 +29,14 @@ app.get('/payments', (req, res,) => {
     });
 });
 
+app.post('/payments/filter', (req, res,) => {
+    payments_model.getPayments(req.body, true, (all_time_filter) => {
+        res.send({'all_time':all_time_filter, 'currency_symbol': '₪'} )
+    });
+});
+
+
+
 app.get('/suppliers', (req, res,) => {
     suppliers_model.getSuppliers((data) => {
         res.render('suppliers', {suppliers: data});

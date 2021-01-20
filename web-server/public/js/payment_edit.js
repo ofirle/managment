@@ -12,7 +12,6 @@ $(document).ready(function(){
             }
             project_id = $("#project_id").attr('value');
             if(project_id){
-                console.log(project_id);
                 $("#project_id").val(project_id);
                 $("#project_id" ).prop( "disabled", true ); //Disable
             }

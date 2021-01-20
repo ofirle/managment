@@ -7,7 +7,6 @@ $(document).ready(function(){
 
     $("#real-file").on('change', function(){
         var paths_names = (new URL(window.location.href).pathname).split( '/' );
-        console.log(paths_names);
         let project_id = undefined;
         if(paths_names[1] === 'project' && paths_names[3]){
             project_id = paths_names[3];
@@ -28,7 +27,6 @@ $(document).ready(function(){
                 contentType:false,
                 processData: false,
                 success: function(response){
-                    console.log(response);
                     // if(response != 0){
                     //
                     // }

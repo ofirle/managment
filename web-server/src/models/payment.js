@@ -6,15 +6,15 @@ const base = require('./base');
 const getPayments = (filters, calculate_own = false, callback) => {
 
     const [where, values] = getFormatQuery(filters);
-    mysql.connection.query(
-        "SELECT p.*, pr.city, pr.address, pr.company, s.title as supplier_title, pr2.company as company2" +
-        " FROM payments p" +
-        " LEFT JOIN projects pr ON p.object_id=pr.id AND object='PROJECT'" +
-        " LEFT JOIN projects pr2 ON p.rel_object_id=pr2.id AND p.rel_object='PROJECT'" +
-        " LEFT JOIN commissions c ON p.object_id=c.id AND object='COMMISSION'" +
-        " LEFT JOIN suppliers s ON s.id=c.supplier_id" +
-        where +
-        " ORDER BY p.adate ASC", values,
+    let sql =  "SELECT p.*, pr.city, pr.address, pr.company, s.title as supplier_title, pr2.company as company2" +
+    " FROM payments p" +
+    " LEFT JOIN projects pr ON p.object_id=pr.id AND object='PROJECT'" +
+    " LEFT JOIN projects pr2 ON p.rel_object_id=pr2.id AND p.rel_object='PROJECT'" +
+    " LEFT JOIN commissions c ON p.object_id=c.id AND object='COMMISSION'" +
+    " LEFT JOIN suppliers s ON s.id=c.supplier_id" +
+    where +
+    " ORDER BY p.adate ASC";
+    mysql.connection.query(sql, values,
         function (err, results, fields) {
             if (err) throw err;
             results.forEach(parsePayments);
@@ -31,7 +31,6 @@ function parsePayments(item){
         item.company = item.company2;
     }
     let value = base.getValueCompanyShared(item.company, base.paymentSharedByCompany);
-    console.log(value);
     if(value !== false){
         item.amount = item.amount * (value / 100);
     }

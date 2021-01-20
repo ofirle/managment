@@ -51,7 +51,6 @@ $(document).ready(function(){
             dataType: 'json',
             contentType: 'application/json',
             success: function(data) {
-                console.log(data);
                 window.location.href = location.origin + "/projects";
             }
         });

@@ -35,7 +35,6 @@ const getCommissionsInfoByProject = (project_id, callback) => {
             if (err) throw err;
             results.forEach(parseCommissionObject);
             results.forEach(buildCommissionObject);
-            console.log(results);
             callback(results);
         });
     console.log("in getCommissionsInfoByProject. commission_id: " + project_id);
@@ -81,7 +80,6 @@ const setPaymentCommission = (commission_id, data, callback) => {
             method: data.method,
             amount: (commission_data.percentage /100) * commission_data.item_cost,
         };
-        console.log(data_payments);
         const {sql, values} = lib.buildSqlCreate('payments', ['object', 'object_id', 'rel_object', 'rel_object_id', 'method', 'amount'], data_payments);
         mysql.connection.query(sql, values,
             function (err, results) {
