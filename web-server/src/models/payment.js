@@ -177,8 +177,7 @@ function getFormatQuery(filters){
                     values.push(filter.value);
                     break;
                 case 'COMPANY':
-                    where += ' AND pr.company=? OR pr2.company2=?';
-                    values.push(filter.value);
+                    where += ' AND pr.company=?';
                     values.push(filter.value);
                     break;
                 case 'OBJECT':
