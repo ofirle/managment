@@ -16,10 +16,8 @@
     <title>Active Projects</title>
 </head>
 <body>
-
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -30,34 +28,35 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a style="font-size: 1.25em" class="active" href="/projects">Projects</a></li>
-                <li><a style="font-size: 0.85em;" href="/project/create">Add Project</a></li>
-                <li><a style="font-size: 1.25em" href="/payments">Payments</a></li>
-                <li><a style="font-size: 0.85em" href="/payment">Add Payment</a></li>
-                <li><a style="font-size: 1.25em" href="/suppliers">Suppliers</a></li>
-                <li><a style="font-size: 0.85em" href="/supplier/create">Add Supplier</a></li>
-
+                <li class="nav-option" id="project-nav"><a style="font-size: 1.25em" class="active" href="/projects">Projects</a></li>
+                <li class="nav-option" id="payment-nav"><a style="font-size: 1.25em" href="/payments">Payments</a></li>
+                <li class="nav-option" id="supplier-nav"><a style="font-size: 1.25em" href="/suppliers">Suppliers</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="./LogoutServlet">Logout</a></li>
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="sub-nav">
+            </ul>
+        </div>
+    </div>
 </nav>
 
 <h3>Active Projects</h3>
-
-    <div class="form-group">
-        <label for="company">Company</label>
-        <select id="company" class="form-control">
+    <div class="form-inline" style="margin-top: 30px;">
+        <label for="company" style="margin-left: 30px; width: 45%;">Company</label>
+        <label for="status" style="margin-right:30px; width: 45%; float: right">Status</label>
+    </div>
+    <div class="form-inline">
+        <select id="company" class="form-control" style="margin-left: 30px; width: 45%;">
             <option value="ALL">All</option>
             <option value="DANIEL">Daniel</option>
             <option value="HD">HD</option>
         </select>
-    </div>
-    <div class="form-group">
-        <label for="status_labels">Status</label>
-        <select id="status" class="form-control">
+        <select id="status" class="form-control" style="margin-right:30px; width: 45%; float: right">
             <option value="ALL">All</option>
             <option value="PENDING">Pending</option>
             <option value="IN_PROCESS">In Process</option>
@@ -65,6 +64,7 @@
             <option value="PAUSED">Paused</option>
         </select>
     </div>
+
     <table class="table">
         <thead>
         <tr>
@@ -75,7 +75,6 @@
             <th scope="col">Payment Status</th>
             <th scope="col">Company</th>
             <th scope="col">Created Date</th>
-            <th scope="col">Options</th>
         </tr>
         </thead>
         <tbody>
@@ -92,10 +91,6 @@
                 </td>
                 <td>{{company}}</td>
                 <td>{{adate}}</td>
-                <td>
-                    <i id="edit-project" class="fa fa-edit icon-clickable" style="margin-left: 7px"></i>
-                    <i class="fa fa-trash-alt icon-clickable" style="margin-left: 7px"></i>
-                </td>
             </tr>
             {{/each}}
         </tbody>

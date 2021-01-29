@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    navbarChanged();
+
     $( "#company" ).change(function() {
         let data = getFilters();
         setFilters(data);
@@ -8,17 +10,72 @@ $(document).ready(function(){
         let data = getFilters();
         setFilters(data);
     });
+
+    $("#delete-project").on("click", function(e) {
+        console.log("delete clicked");
+        const project_id =$(this).closest('tr').children('th').text();
+        let data = {
+            project_id: project_id
+        };
+
+        e.stopPropagation();
+        $.ajax({
+            type: "POST",
+            url: 'project/delete',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                alert(project_id + " Deleted");
+            }
+        });
+    });
+
     rowListener();
 });
 
 function rowListener(){
         console.log("rowListener Called");
-    $(".project-row").on("click", function(){
+    $(".project-row").on("click", function(e){
+        console.log($(this));
         const project_id = $(this).children('th').text();
         window.location.href = "/project/" + project_id;
     });
 }
 
+function removeSubMenu(){
+    $("#sub-nav").empty();
+}
+
+function navbarChanged(){
+    $( ".nav-option" ).on( "mouseover", function() {
+        $(this).css("font-weight: bold;");
+        addSubMenu($(this).attr('id'));
+    });
+    $("nav" ).mouseleave(function(){
+        $( "#sub-nav" ).html("");
+    });
+}
+
+function addSubMenu(type){
+    removeSubMenu();
+    let html = "";
+    switch(type){
+        case 'project-nav':
+            html = "<li><a style=\"font-size: 0.85em;\" href=\"/projects/\">Show All</a></li>\n" +
+                "<li><a style=\"font-size: 0.85em;\" href=\"/project/create\">Add</a></li>";
+            break;
+        case 'payment-nav':
+            html = "<li><a style=\"font-size: 0.85em;\" href=\"/payments/\">Show All</a></li>\n" +
+                "<li><a style=\"font-size: 0.85em;\" href=\"/payment/\">Add</a></li>";
+            break;
+        case 'supplier-nav':
+            html = "<li><a style=\"font-size: 0.85em;\" href=\"/suppliers/\">Show All</a></li>\n" +
+                "<li><a style=\"font-size: 0.85em;\" href=\"/supplier/create\">Add</a></li>";
+            break;
+    }
+    $( "#sub-nav" ).html(html);
+}
 function setFilters(data){
     $.ajax({
         type: "POST",
@@ -73,4 +130,8 @@ function getFilterStatus(data){
     if(status !== 'ALL'){
         data.push({object: 'STATUS', value: status});
     }
+}
+
+function removeSubMenu(){
+    $("#sub-nav").empty();
 }

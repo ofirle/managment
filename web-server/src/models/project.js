@@ -73,7 +73,7 @@ const getProjectsNotFullyPayed = (callback) => {
 const getProjectFull = (project_id, callback) => {
     console.log("in getProjectFull Info. project_id: " + project_id);
     getProjectInfo(project_id, true,(data) => {
-        const result = {"info": data};
+        const result = {"info": data, 'currency_symbol': '₪'} ;
         payments_model.getPaymentsInfoByProject(project_id, (data) => {
             result.payments = data;
             getNotesInfo(project_id, (data) => {
@@ -194,6 +194,21 @@ const getNotesInfo = (project_id, callback) => {
 
 };
 
+const deleteProject = (project_id, callback) => {
+    console.log("Delete project_id: " + project_id);
+    mysql.connection.query(
+        "DELETE pr, p " +
+        "FROM projects pr " +
+        "LEFT JOIN payments p ON p.rel_object='PROJECT' AND p.object_id=pr.id " +
+        "WHERE pr.id=?;", [project_id],
+        function (err, results) {
+            if (err) throw err;
+            commissions_model.deleteCommissionByProject(project_id, (response) => {
+                callback(true);
+            });
+        });
+};
+
 function parseProjectInfo(item) {
     item.adate = base.parseDate(item.adate, false);
     item.start_date = base.parseDate(item.start_date, false);
@@ -215,5 +230,6 @@ module.exports = {
     addProject: addProject,
     getProjectsIds: getProjectsIds,
     getProjectsNotFullyPayed: getProjectsNotFullyPayed,
-    getSharedCompanies: getSharedCompanies
+    getSharedCompanies: getSharedCompanies,
+    deleteProject: deleteProject
 };

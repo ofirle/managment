@@ -134,6 +134,18 @@ const getPaymentInfo = (payment_id, to_parse = false, queries, callback) => {
     }
 };
 
+const deletePayment = (payment_id, callback) => {
+    console.log("Delete payment_id: " + payment_id);
+    mysql.connection.query(
+        "DELETE p " +
+        "FROM payments p " +
+        "WHERE p.id=?;", [payment_id],
+        function (err, results) {
+            if (err) throw err;
+            callback(true);
+        });
+};
+
 function parsePaymentObject(item) {
     item.method = base.parseLabelText(item.method, base.methodArray);
     item.adate = base.parseDate(item.adate, true);
@@ -201,4 +213,5 @@ module.exports = {
     getPayments: getPayments,
     paymentRestToPay: paymentRestToPay,
     setNewPayment: setNewPayment,
+    deletePayment: deletePayment
 };

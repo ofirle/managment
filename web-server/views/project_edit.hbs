@@ -21,7 +21,6 @@
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -32,19 +31,21 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a style="font-size: 1.25em" href="/projects">Projects</a></li>
-                <li><a style="font-size: 0.85em;" href="/project/create">Add Project</a></li>
-                <li><a style="font-size: 1.25em" href="/payments">Payments</a></li>
-                <li><a style="font-size: 0.85em" href="/payment">Add Payment</a></li>
-                <li><a style="font-size: 1.25em" href="/suppliers">Suppliers</a></li>
-                <li><a style="font-size: 0.85em" href="/supplier/create">Add Supplier</a></li>
-
+                <li class="nav-option" id="project-nav"><a style="font-size: 1.25em" class="active" href="/projects">Projects</a></li>
+                <li class="nav-option" id="payment-nav"><a style="font-size: 1.25em" href="/payments">Payments</a></li>
+                <li class="nav-option" id="supplier-nav"><a style="font-size: 1.25em" href="/suppliers">Suppliers</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="./LogoutServlet">Logout</a></li>
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="sub-nav">
+            </ul>
+        </div>
+    </div>
 </nav>
 
 <h3>Project Edit</h3>

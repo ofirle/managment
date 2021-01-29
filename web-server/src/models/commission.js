@@ -96,6 +96,18 @@ const setPaymentCommission = (commission_id, data, callback) => {
     })
 };
 
+const deleteCommissionByProject = (project_id, callback)=>{
+    mysql.connection.query(
+        "DELETE c, p " +
+        "FROM commissions c " +
+        "LEFT JOIN payments p ON p.rel_object='COMMISSION' AND p.object_id=c.id " +
+        "WHERE c.project_id=?;", [project_id],
+        function (err, results) {
+            if (err) throw err;
+            callback(true);
+        })
+};
+
 const setCommissionInfo = (commission_id, data, callback) => {
     console.log("in setCommissionInfo. commission_id: " + commission_id);
     let succeed = false;
@@ -138,6 +150,19 @@ const setCommissionInfo = (commission_id, data, callback) => {
     });
 };
 
+const deleteCommission = (commission_id, callback) => {
+    console.log("Delete commission_id: " + commission_id);
+    mysql.connection.query(
+        "DELETE c " +
+        "FROM commissions c " +
+        "LEFT JOIN payments p ON p.object='COMMISSION' AND object_id = c.id " +
+        "WHERE c.id=?;", [commission_id],
+        function (err, results) {
+            if (err) throw err;
+            callback(true);
+        });
+};
+
 const getCommissionsIds = (callback) => {
     console.log("in getCommissionsIds");
     mysql.connection.query(
@@ -171,5 +196,7 @@ module.exports = {
     getCommissionsInfoBySupplier: getCommissionsInfoBySupplier,
     setCommissionInfo: setCommissionInfo,
     getCommissionsIds: getCommissionsIds,
-    setPaymentCommission: setPaymentCommission
+    setPaymentCommission: setPaymentCommission,
+    deleteCommissionByProject: deleteCommissionByProject,
+    deleteCommission: deleteCommission
 };

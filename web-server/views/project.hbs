@@ -52,7 +52,29 @@
     <div class="row">
         <div class="col col-lg-8">
             <h3>Project Info</h3>
+            <i class="fa fa-trash-alt icon-clickable" style="margin-left: 7px; float:right; font-size: 1.25em; padding-bottom: 10px;"  data-toggle="modal" data-target="#exampleModal"></i>
             <span><i id="edit-project" class="fa fa-edit icon-clickable" style="float:right; font-size: 1.25em; padding-bottom: 10px;"></i></span>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Project</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are You Sure you want to delete this project?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="delete-project" type="button" class="btn btn-danger">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table class="table table-striped rounded">
                 <tbody>
                     <tr>
@@ -77,11 +99,11 @@
                     </tr>
                     <tr>
                         <th>Total Payed</th>
-                        <td>{{info.payment.payed}}</td>
+                        <td>{{info.payment.payed}}{{currency_symbol}}</td>
                     </tr>
                     <tr>
                         <th>Total Amount</th>
-                        <td>{{info.payment.total}}</td>
+                        <td>{{info.payment.total}}{{currency_symbol}}</td>
                     </tr>
                     <tr>
                         <th>Status</th>
@@ -121,9 +143,10 @@
                 {{#each payments}}
                     <tr class="project-row">
                         <th id="id" scope="row">{{id}}</th>
-                        <td id="amount">{{amount}}</td>
+                        <td id="amount">{{amount}}{{../currency_symbol}}</td>
                         <td>{{adate}}</td>
                         <td><i class="fa fa-edit icon-clickable edit-payment" style="float:right"></i></td>
+                        <td><i class="fa fa-trash-alt icon-clickable delete-payment"></i></td>
                     </tr>
                 {{/each}}
                 </tbody>
@@ -149,12 +172,13 @@
                         <th id="id" scope="row">{{id}}</th>
                         <td>{{supplier_title}}</td>
                         <td>{{item_description}}</td>
-                        <td>{{amount}}</td>
+                        <td>{{amount}}{{../currency_symbol}}</td>
                         <td>{{bought_date}}</td>
                         <td>{{is_payed}}</td>
                         <td>{{payed_date}}</td>
                         <td><i class="fa fa-money-bill icon-clickable commission-payed"></i></td>
                         <td><i class="fa fa-edit icon-clickable edit-commission" style="float:right"></i></td>
+                        <td><i class="fa fa-trash-alt icon-clickable delete-commission"></i></td>
                     </tr>
                 {{/each}}
                 </tbody>
@@ -194,6 +218,7 @@
                     <th scope="col">Note</th>
                     <th scope="col">Created</th>
                     <th scope="col">Edited</th>
+                    <th scope="col">Options</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -203,6 +228,7 @@
                         <td>{{note}}</td>
                         <td>{{adate}}</td>
                         <td>{{edate}}</td>
+                        <td><i id="delete-note" class="fa fa-trash-alt icon-clickable" style="float:right"></i></td>
                     </tr>
                 {{/each}}
                 </tbody>
@@ -247,7 +273,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 

@@ -35,7 +35,29 @@ app.post('/payments/filter', (req, res,) => {
     });
 });
 
+app.post('/project/delete', (req, res,) => {
+    console.log("delete project in app, project_id:");
+    console.log(req.body);
+    projects_model.deleteProject(req.body.project_id, (data) => {
+        res.send({'data':data} )
+    });
+});
 
+app.post('/payment/delete', (req, res,) => {
+    console.log("delete Payment in app, payment_id");
+    console.log(req.body);
+    payments_model.deletePayment(req.body.payment_id, (data) => {
+        res.send({'data':data} )
+    });
+});
+
+app.post('/commission/delete', (req, res,) => {
+    console.log("delete Commission in app, commission_id");
+    console.log(req.body);
+    commission_model.deleteCommission(req.body.commission_id, (data) => {
+        res.send({'data':data} )
+    });
+});
 
 app.get('/suppliers', (req, res,) => {
     suppliers_model.getSuppliers((data) => {
@@ -45,14 +67,14 @@ app.get('/suppliers', (req, res,) => {
 
 app.get('/projects', (req, res,) => {
     projects_model.getProjectsInfo(false, (data) => {
-        res.render('index.hbs', {'projects':data});
+        res.render('index.hbs', {'projects':data, 'currency_symbol': '₪'} );
     });
 });
 
 app.post('/projects/filter', (req, res,) => {
     const body = req.body;
     projects_model.getProjectsInfo(req.body, (data) => {
-        res.send({'projects':data});
+        res.send({'projects':data, 'currency_symbol': '₪'} );
     });
 });
 
