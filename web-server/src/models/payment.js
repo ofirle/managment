@@ -40,7 +40,7 @@ function parsePayments(item){
     item.object = base.parseLabelText(item.object, base.objectTypeArray);
 }
 const setNewPayment = (data, callback) => {
-    const {sql, values} = lib.buildSqlCreate('payments', [ 'project_id', 'method', 'amount'], data);
+    const {sql, values} = lib.buildSqlCreate('payments', [ 'object', 'object_id', 'method', 'amount'], data);
 
     let succeed = false;
     mysql.connection.query(sql, values,

@@ -34,7 +34,8 @@ $(document).ready(function(){
         }
         let project_id = $("#project_id").val();
         const data = {
-            project_id: project_id,
+            object: 'PROJECT',
+            object_id: project_id,
             method: $("#method").val(),
             amount: $("#amount").val()
         };
